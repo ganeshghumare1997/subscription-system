@@ -17,6 +17,7 @@ export class GlobalServiceService {
   searchData;
   newProductData;
   subscriptionData;
+  productRatePlanMapping: string;
   constructor(private http: HttpClient) { }
 
   loginservice(username, password) {
@@ -100,7 +101,7 @@ export class GlobalServiceService {
       // "lastBillDate": "",
       // "nextBillDate": ""
     })
-    
+
     return this.http.put(this.url + '/subscriptions', this.subscriptionData, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -158,16 +159,61 @@ export class GlobalServiceService {
         'Content-Type': 'application/json',
         'x-auth-token': localStorage.getItem('x-auth-token') || ''
       })
-    }).pipe(map((response: Response) => {
-      console.log(response);
-      return response;
-    }));
+    });
   }
 
+  getAllRatePlans(pageNo: number = 0) {
+    return this.http.get(this.url + `/product/getAllRatePlans/${pageNo}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('x-auth-token') || ''
+      })
+    });
+  }
 
+  associateProductWithRatePlan(selectedProduct, selectedRatePlan) {
 
+    this.productRatePlanMapping = JSON.stringify(
+      {
+        "product": {
+              "productDescription": selectedProduct.productDispName,
+              "productDispName": selectedProduct.productDispName,
+              "productExpDate": selectedProduct.productExpDate,
+              "productStartDate": selectedProduct.productStartDate,
+              "productTypeCode": selectedProduct.productTypeCode,
+              "sku": selectedProduct.sku,
+              "uidpk": selectedProduct.uidpk,
+              "stripeId": selectedProduct.stripeId
+            },
+        "ratePlan": [
+            {
+              "uidpk": selectedRatePlan.uidpk,
+              "ratePlanId": selectedRatePlan.ratePlanId,
+              "price": selectedRatePlan.price,
+              "name": selectedRatePlan.name,
+              "isActive": selectedRatePlan.isActive,
+              "pricingScheme": selectedRatePlan.pricingScheme,
+              "type": selectedRatePlan.type,
+              "billEvery": selectedRatePlan.billEvery,
+              "billingCycleTerm": selectedRatePlan.billingCycleTerm,
+              "currencyCode": selectedRatePlan.currencyCode || "USD",
+              "expireAfter": selectedRatePlan.expireAfter,
+              "freeTrail": selectedRatePlan.freeTrail,
+              "ratePlanVolumeDtoList": selectedRatePlan.ratePlanVolumeDtoList,
+              "setUpFree": selectedRatePlan.setUpFee,
+              "transactionFlag": selectedRatePlan.transactionFlag,
+            }
+          ]
+      });
 
-  //addProduct 
+    return this.http.post(this.url + '/product/associatePlan', this.productRatePlanMapping, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    });
+  }
+
+  //addProduct
 
   addProduct(name, description, sku, startDate, endDate, pCode) {
     this.newProductData = JSON.stringify(
@@ -335,7 +381,7 @@ export class GlobalServiceService {
     }));
   }
   fetchdropdownvalues(){
-  
+
     return this.http.get(this.url + '/product/getProductType', {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

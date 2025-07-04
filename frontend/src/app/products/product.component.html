@@ -1,7 +1,7 @@
 <div id="rightSideWrapper">
   <div class="ContentBox">
     <main>
-      <!-- Main Content 
+      <!-- Main Content
 
         <div class="test-header">
           Page Size:
@@ -15,7 +15,12 @@
       <div class="container-fluid custom_search" style="padding: 0px;">
         <div class="col-lg-12 search_box" style="padding: 0px;color: #117a8b; text-transform: uppercase; line-height: 40px;">
           <h5 *ngIf="isValid()">Products <button class="btn btn-outline-info float-right" style="margin:-12px 0 0 5px" (click)="open(addUser)">Add Product <i class="fa fa-user-plus" aria-hidden="true"></i></button>
-            <button class="btn btn-outline-danger float-right"  style="margin:-12px 0 0 5px" >Associate Plans <i class="fa fa-sellsy" aria-hidden="true"></i></button></h5>
+            <button class="btn btn-outline-danger float-right"  style="margin:-12px 0 0 5px" (click)="openModal()" >Associate Plans <i class="fa fa-sellsy" aria-hidden="true"></i></button></h5>
+            <app-modal
+              *ngIf="showModal"
+              (close)="closeModal()"
+              (add)="onAdd($event.product, $event.ratePlan)">
+            </app-modal>
           <router-outlet></router-outlet>
           <!-- <div class="row headerStrip" *ngIf="isValid()">
             <button class="btn btn-info" style="margin:3px" (click)="open(addUser)">Add</button>
@@ -86,23 +91,23 @@
                   </div>
                 </div>
                 <div class="col-lg-3">
-                    
-                </div>                
+
+                </div>
                 <div class="col-lg-3">
-                    <label style="width: 100%;"></label>   
+                    <label style="width: 100%;"></label>
                     <button type="button" id="searchBtn" class="btn btn-info float-right" style=" margin-left: 5px; line-height:17px;">
                         Export to Csv <i class="fa fa-cloud-download" aria-hidden="true"></i>
                     </button>
                         <button type="button" id="searchBtn" class="btn btn-info float-right" style=" margin-left: 5px; line-height:17px;">
                             Search
                             <i class="fa fa-search" aria-hidden="true" style="color:#ffffff;margin-top: -4px;margin-left: 5px; "></i>
-                          </button>        
+                          </button>
                       <!-- <button class="btn btn-info" style="margin-top: 41px;">Search <i class="fa fa-search" aria-hidden="true" style="color:#ffffff;margin-top: -4px;margin-left: 5px; "></i>
                       </button> -->
-                   
+
                 </div>
               </div>
-              
+
             </form>
           </div>
         </div>
@@ -122,7 +127,7 @@
           <!-- <div style="position: absolute; top: 10px; left: auto; width: 100%;">
             <input type="text" class="form-control" (input)="onQuickFilterChanged()"
               style="width: 30%; display: inline-block;" id="quickFilter" placeholder="quick filter..." />
-            
+
             <label style="margin-left: 20px;"> <button (click)="onBtExport()" class="btn btn-info"
                 style="margin-top: -7px;">Export to CSV <i aria-hidden="true" class="fa fa-cloud-download"></i></button> </label>
           </div> -->
@@ -131,7 +136,7 @@
       </div>
 
 
-     
+
       <ng-template #addUser let-modal >
           <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">Add Product</h4>
@@ -139,12 +144,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          
+
               <flash-messages></flash-messages>
-            
+
           <div class="modal-body">
             <form>
-             
+
               <div class="row">
                 <div class="col-lg-4">
                   <div class="form-group">
@@ -198,27 +203,27 @@
                     <div class="form-group" >
                         <label for="dateOfBirth"> Product Type:</label>
                         <select class="form-control" id="sel1" name="producttype"  [(ngModel)]="producttype" (change)="dropDown(producttype)">
-                          <option  [ngValue]="Select" hidden>Select</option> 
+                          <option  [ngValue]="Select" hidden>Select</option>
                           <option *ngFor="let values of DrodownArray" >{{values.productType}}</option>
-                        
+
                         </select>
                   </div>
                 </div>
-              </div>  
+              </div>
             </form>
           </div>
           <div class="modal-footer">
-             
+
             <button type="button" class="btn btn-info" (click)="addProductData(name,description,sku,startDate,endDate)">Save</button>
             <button type="button" class="btn btn-info" (click)="modal.close('Save click')">Close</button>
           </div>
         </ng-template>
-      
-      
 
 
-      
-      
+
+
+
+
 
     </main>
   </div>

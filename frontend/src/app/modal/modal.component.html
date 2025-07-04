@@ -1,0 +1,25 @@
+<div class="modal-backdrop" (click)="onClose()"></div>
+<div class="modal-container">
+  <h2>Associate Plans</h2>
+
+  <div class="field">
+    <label for="productSelect">Select the Product</label>
+    <select id="productSelect" [(ngModel)]="selectedProductUidpk">
+      <option *ngFor="let p of products" [value]="p.uidpk">{{ p.uidpk}} - {{ p.productDispName }}</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="planSelect">Select the Rate Plan</label>
+    <select id="planSelect" [(ngModel)]="selectedRatePlanUidpk">
+      <option *ngFor="let r of ratePlans" [value]="r.uidpk">{{ r.uidpk}} - {{ r.name }}</option>
+    </select>
+  </div>
+
+  <button (click)="onAdd()" type="button" id="addBtn" class="btn btn-info btn-lg">
+    Add
+  </button>
+  <button type="button" id="closeBtn" class="btn btn-info btn-lg" (click)="onClose()">
+    Close
+  </button>
+</div>

@@ -103,6 +103,14 @@ public class RatePlanServiceImpl implements RatePlanService {
 		else
 			throw new CustomGlobalException(100, "Invalid rate plan to update");
 	}
+
+	public List<Number> getAllRatePlanIds() {
+		System.out.println("The request is received in getAllRatePlanIds");
+		List<Number> ratePlanIdsList = new ArrayList<Number>();
+		List<RatePlan> result = ratePlanRepository.findAll();
+		System.out.println("result: " + result);
+		return ratePlanIdsList;
+	};
 	
 	@Override
 	public List<RatePlanDto> getRatePlans(Pageable reqCount,RatePlanFilterReqDto filterReq) {

@@ -1,5 +1,6 @@
 package com.hcl.bss.controllers;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.bss.domain.Product;
 import com.hcl.bss.domain.ProductTypeMaster;
 import com.hcl.bss.dto.DropDownOutDto;
@@ -25,6 +27,10 @@ import com.hcl.bss.dto.ProductPlanAssociationDto;
 import com.hcl.bss.dto.ResponseDto;
 import com.hcl.bss.dto.StatusDto;
 import com.hcl.bss.services.ProductService;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Price;
+import com.stripe.param.PriceCreateParams;
+import com.stripe.param.ProductCreateParams;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -39,7 +45,16 @@ public class ProductController {
 
 	@ApiOperation(value = "Add product", response = ProductDto.class)
 	@RequestMapping(value = "/product/add", produces = { "application/json" }, method = RequestMethod.POST)
-	public ResponseEntity<Product> addProduct(@RequestBody ProductDto product) {
+	public ResponseEntity<Product> addProduct(@RequestBody ProductDto product) throws StripeException {
+		ProductCreateParams productParams = ProductCreateParams.builder()
+			.setName(product.getProductDispName())
+			.setDescription(product.getProductDescription())
+			.addImage("https://files.stripe.com/links/MDB8YWNjdF8xUlRpTUZDSWY1UXNQYWt5fGZsX3Rlc3RfSlN0YllKOUdGRzl1cEIzNXJnY054VE1X003BRScz91")
+			.build();
+		com.stripe.model.Product stripeProduct = com.stripe.model.Product.create(productParams);
+
+		product.setStripeId(stripeProduct.getId());
+
 		Product prod = productService.addProduct(product);
 		return new ResponseEntity<>(prod, HttpStatus.OK);
 
@@ -69,7 +84,6 @@ public class ProductController {
 		ProductDataDto productData = new  ProductDataDto();
 		productData = productService.getAllProducts(reqCount);
 		return new ResponseEntity<>(productData, HttpStatus.OK);
-
 	}
 
 	@ApiOperation(value = "Get Product Type", response = ProductDto.class)
@@ -94,14 +108,42 @@ public class ProductController {
 			e.printStackTrace();
 			return new ResponseEntity<ProductDataDto>(productData, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}	
+	}
+
 	@ApiOperation(value = "Associate Product with Plan", response = String.class)
-	@RequestMapping(value = "/product/associatePlan",produces = { "application/json" },method = RequestMethod.POST)
-	public ResponseEntity<StatusDto> accociatePlan(@RequestBody ProductPlanAssociationDto productPlan) {
+	@PostMapping(value = "/product/associatePlan")
+	public ResponseEntity<StatusDto> accociatePlan(@RequestBody ProductPlanAssociationDto productPlan) throws StripeException {
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		try {
+			System.out.println("productPlan: " + objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(productPlan));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		BigDecimal productPlanPrice = BigDecimal.valueOf(productPlan.getRatePlan().get(0).getPrice());
+		Long amountInCents = productPlanPrice.multiply(BigDecimal.valueOf(100)).longValueExact(); // preferred
+
+		PriceCreateParams priceParams = PriceCreateParams.builder()
+			.setUnitAmount(amountInCents)
+			.setCurrency(productPlan.getRatePlan().get(0).getCurrencyCode())
+			.setRecurring(
+				PriceCreateParams.Recurring.builder()
+					.setInterval(PriceCreateParams.Recurring.Interval.MONTH)
+					.build()
+			)
+			.setNickname(productPlan.getRatePlan().get(0).getName())
+			.setProduct(String.valueOf(productPlan.getProduct().getStripeId())) //saved stripe product id
+			.putMetadata("service", "netflix") // same "service" key value for all pricing of a product.  (unique to a product) 
+			.build();
+		
+		Price price = Price.create(priceParams);
+		System.out.println("Created BASIC price ID: " + price.getId());
+		
 		StatusDto status = new StatusDto();
-		 String msg = productService.associatePlan(productPlan);
-		 status.setMsg(msg);
-		 return new ResponseEntity<StatusDto>(status, HttpStatus.OK);
+		String msg = productService.associatePlan(productPlan);
+		status.setMsg(msg);
+		return new ResponseEntity<StatusDto>(status, HttpStatus.OK);
 	}
 
 

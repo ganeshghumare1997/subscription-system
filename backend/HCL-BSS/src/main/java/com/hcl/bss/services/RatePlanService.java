@@ -15,6 +15,7 @@ public interface RatePlanService {
 
 	ResponseDto addRatePlan(RatePlanDto ratePlanDto);
 	List<RatePlanDto> getRatePlans(Pageable reqCount,RatePlanFilterReqDto dto);
+	List<Number> getAllRatePlanIds();
 	List<String> getCurrency();
 	Iterable<UOM> getUom();
 	List<String> getDropDownData(String statusId);

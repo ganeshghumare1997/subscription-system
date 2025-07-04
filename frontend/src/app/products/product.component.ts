@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalServiceService } from '../global-service.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { ChildMessageRenderer } from "../child-message-renderer.component";
-import { ModalsService } from '../modal.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateFRParserFormatter } from "../ngb-date-fr-parser-formatter";
 @Component({
   selector: 'app-product',
@@ -40,6 +39,20 @@ export class ProductComponent implements OnInit {
   code;
   P_code_Type;
 
+  showModal = false;
+
+  openModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
+  onAdd(product: string, plan: string) {
+    console.log('Adding', product, plan);
+    this.closeModal();
+  }
 
   constructor(private spinnerService: Ng4LoadingSpinnerService,private router : Router,private modalService: NgbModal,private flashMessage: FlashMessagesService,private childMessageRenderer: ChildMessageRenderer,private globalServiceService: GlobalServiceService) {
     this.columnDefs = [
@@ -75,8 +88,8 @@ export class ProductComponent implements OnInit {
         this.DrodownArray=data;
         console.log(this.DrodownArray);
       });
-    
   }
+
   dropDown(producttype){
     console.log(producttype);
     for(let i=0;i<this.DrodownArray.length;i++){
@@ -116,8 +129,8 @@ export class ProductComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
     this.globalServiceService.usermanagementCalling().subscribe(
     data => {
-      console.log('API response:', data); 
-      this.rowData = data.productList; 
+      console.log('API response:', data);
+      // this.rowData = data.productList;
     },
     error => {
       console.error('Error loading products', error);
@@ -154,7 +167,7 @@ export class ProductComponent implements OnInit {
     return false;
   }
 
-  
+
   addProductData(name,description,sku,startDate,endDate){
 
     let sDate=startDate.day+'/'+startDate.month+'/'+startDate.year;
@@ -164,31 +177,31 @@ export class ProductComponent implements OnInit {
       data => {
       console.log(data);
       this.rowData=[];
-      
+
       this.globalServiceService.usermanagementCalling().subscribe(
         data => {
           this.spinnerService.hide();
-          this.rowData = data;  
+          this.rowData = data;
           this.producttype="";
           this.name="";
           this.description="";
           this.sku="";
           this.startDate="";
           this.endDate="";
-          
+
         });
 
       this.flashMessage.show('New Product added successfully!!', { cssClass: 'alert-success', timeout: 10000 });
       },
     error=>{
       this.spinnerService.hide();
-      if(error.error.errorCode==1062){       
+      if(error.error.errorCode==1062){
         let msg=error.error.message;
         this.flashMessage.show(msg, { cssClass: 'alert-danger', timeout: 10000 });
       }else{
         this.flashMessage.show('Product not added !!', { cssClass: 'alert-danger', timeout: 10000 });
-      }    
-      
+      }
+
     });
    }
 

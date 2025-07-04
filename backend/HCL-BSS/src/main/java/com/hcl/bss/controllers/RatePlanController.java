@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.bss.domain.UOM;
 import com.hcl.bss.dto.DropDownOutDto;
-import com.hcl.bss.dto.ProductDto;
 import com.hcl.bss.dto.RatePlanDto;
 import com.hcl.bss.dto.RatePlanFilterReqDto;
 import com.hcl.bss.dto.RatePlanResponseDto;
@@ -150,5 +150,15 @@ public class RatePlanController {
 				dropDownOutDto.setSuccess(false);
 				return new ResponseEntity<DropDownOutDto>(dropDownOutDto,HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+		}
+
+		@ApiOperation(value = "Get All Rate Plans", response = RatePlanDto.class)
+		@RequestMapping(value = "/product/getAllRatePlans/{pageNo}", produces = { "application/json" }, method = RequestMethod.GET)
+		public ResponseEntity<List<RatePlanDto>> getAllRatePlans(@PathVariable("pageNo") String pageNo) {
+			Integer pageNumber = Integer.valueOf(pageNo);
+			
+			Pageable reqCount = PageRequest.of(pageNumber, recordPerPage);
+			List<RatePlanDto> ratePlanDtos = ratePlanService.getRatePlans(reqCount, new RatePlanFilterReqDto());
+			return new ResponseEntity<>(ratePlanDtos, HttpStatus.OK);
 		}
 }

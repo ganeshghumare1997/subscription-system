@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.hcl.bss.domain.RatePlan;
 import com.hcl.bss.validator.CustomDateCompareScheme;
 import com.hcl.bss.validator.CustomDateScheme;
 import com.hcl.bss.validator.ProductStartDateScheme;
@@ -55,6 +54,7 @@ public class ProductDto implements java.io.Serializable {
 	private Set<RatePlanDto> ratePlans;
 	private boolean isAssociatedWithPlan;
 	private boolean transactionFlag;
+	private String stripeId;
 	public ProductDto() {
 		super();
 	}
@@ -256,7 +256,13 @@ public class ProductDto implements java.io.Serializable {
 		this.isAssociatedWithPlan = isAssociatedWithPlan;
 	}
 
+	public String getStripeId() {
+		return stripeId;
+	}
 
+	public void setStripeId(String stripeId) {
+		this.stripeId = stripeId;
+	}
 
 	@Override
 	public String toString() {

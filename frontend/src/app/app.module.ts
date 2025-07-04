@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import { AgGridModule } from 'ag-grid-angular';
 import { ModalsService } from './modal.service';
-import{ModalPopUpComponent} from './modal.component'; 
+import{ModalPopUpComponent} from './modal.component';
 import { GridModule } from '@syncfusion/ej2-angular-grids';
 import { PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
 import { TransactionsComponent } from './transactions/transactions.component';
@@ -30,9 +30,10 @@ import { ImportPlanComponent } from './import-plan/import-plan.component';
 import { ProductComponent } from './products/product.component';
 import { SubscriptionreportComponent } from './subscriptionreport/subscriptionreport.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
-import { NgbDateFRParserFormatter } from "./ngb-date-fr-parser-formatter"; 
+import { NgbDateFRParserFormatter } from "./ngb-date-fr-parser-formatter";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor'; // 👈 Import the interceptor
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -51,17 +52,18 @@ import { TokenInterceptor } from './token.interceptor'; // 👈 Import the inter
     SidebarnavigationComponent,
     ImportPlanComponent,
     ProductComponent,
-    SubscriptionreportComponent
+    SubscriptionreportComponent,
+    ModalComponent,
   ],
 
   imports: [
     BrowserModule,FormsModule,HttpClientModule,HttpModule,GridModule,ReactiveFormsModule,
-    AppRoutingModule,NgbModule.forRoot(),FlashMessagesModule.forRoot(),  
+    AppRoutingModule,NgbModule.forRoot(),FlashMessagesModule.forRoot(),
     AgGridModule.withComponents([ChildMessageRenderer]),NgbPaginationModule, NgbAlertModule,AgGridModule.withComponents([ErrorDownloadComponent])  ,
     AgGridModule.withComponents([FileDownloadComponent]) ,
-    [ Ng4LoadingSpinnerModule.forRoot() ] 
+    [ Ng4LoadingSpinnerModule.forRoot() ]
   ],
- 
+
   providers: [ NgbDateFRParserFormatter, GlobalServiceService, ModalsService, PageService, SortService, FilterService, GroupService,ChildMessageRenderer, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,

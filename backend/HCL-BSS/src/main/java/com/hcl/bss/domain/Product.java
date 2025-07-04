@@ -75,6 +75,8 @@ public class Product implements java.io.Serializable {
 	private Date updatedDate;
 	@Column(name = "UPD_BY", length = 50)
 	private String updatedBy;
+	@Column(name = "STRIPE_ID")
+	private String stripeId;
 	@ManyToMany(fetch=FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.REMOVE})
 	@JoinTable(name = "TB_RATEPLAN_PRODUCT_MAPPING", joinColumns = { @JoinColumn(name = "PRODUCT_UID",referencedColumnName = "UIDPK")}, inverseJoinColumns = { @JoinColumn(name = "RATEPLAN_UID",referencedColumnName = "UIDPK") })
 	private Set<RatePlan> ratePlans = new HashSet<RatePlan>();
@@ -87,7 +89,7 @@ public class Product implements java.io.Serializable {
 
 	public Product(Long uidpk, String productDispName, String sku, String productDescription, Date productExpDate,
 			Date productStartDate, ProductTypeMaster productTypeCode, int isActive, Date createdDate, String createdBy,
-			Date updatedDate, String updatedBy, Set<RatePlan> ratePlans) {
+			Date updatedDate, String updatedBy, Set<RatePlan> ratePlans, String stripeId) {
 		super();
 		this.uidpk = uidpk;
 		this.productDispName = productDispName;
@@ -102,6 +104,7 @@ public class Product implements java.io.Serializable {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 		this.ratePlans = ratePlans;
+		this.stripeId = stripeId;
 	}
 
 
@@ -246,6 +249,14 @@ public class Product implements java.io.Serializable {
 		this.ratePlans = ratePlans;
 	}
 
+	public String getStripeId() {
+		return stripeId;
+	}
+
+	public void setStripeId(String stripeId) {
+		this.stripeId = stripeId;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [uidpk=" + uidpk + ", productDispName=" + productDispName + ", sku=" + sku + ", productExpDate="
@@ -253,5 +264,4 @@ public class Product implements java.io.Serializable {
 				+ ", isActive=" + isActive + ", createdDate=" + createdDate + ", createdBy=" + createdBy
 				+ ", updatedDate=" + updatedDate + ", updatedBy=" + updatedBy + "]";
 	}
-
 }

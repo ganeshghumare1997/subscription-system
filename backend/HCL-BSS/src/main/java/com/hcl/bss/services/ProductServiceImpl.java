@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
-import com.hcl.bss.domain.AppConstantMaster;
 import com.hcl.bss.repository.AppConstantRepository;
 import com.hcl.bss.repository.OrderRepository;
 
@@ -83,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
 		productEntity.setProductDispName(product.getProductDispName());
 		productEntity.setProductDescription(product.getProductDescription());
 		productEntity.setSku(product.getSku());
+		productEntity.setStripeId(product.getStripeId());
 		String startDate = product.getProductStartDate();
 		String expDate = product.getProductExpDate();
 		if(null != expDate) {
@@ -197,6 +197,7 @@ public class ProductServiceImpl implements ProductService {
 			prod.setProductType(product.getProductTypeCode().getProductTypeCode());
 			prod.setProductTypeCode(product.getProductTypeCode().getProductType());
 			prod.setProductDescription(product.getProductDescription());
+			prod.setStripeId(product.getStripeId());
 			prod.setSku(product.getSku());
 			if(product.getIsActive()==0) {
 				prod.setStatus("InActive");

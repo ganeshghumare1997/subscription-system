@@ -92,7 +92,4 @@ public class AuthenticationController{
         User user = this.userServices.findById(id);
         return user;
     }
-
-
-
 }
