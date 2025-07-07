@@ -65,7 +65,21 @@ export class ProductComponent implements OnInit {
       // { headerName: 'Start Date', field: 'startdate',editable:true  },
       //{ headerName: 'Status', cellRenderer: "childMessageRenderer", colId: "params",editable:true  },
       { headerName: 'Status', field:'status',editable:true  },
-      { headerName: 'Plans', field: 'plans',editable:true  },
+      // { headerName: 'Plans', field: 'plans',editable:true  },
+      {
+        headerName: "Plans",
+        field: "ratePlans",
+        editable: false,
+        autoHeight: true,
+        cellRenderer: (params) => {
+          if (!params.value || params.value.length === 0) {
+            return "No Plans";
+          }
+          return params.value
+            .map((plan) => `${plan.name} ($${plan.price})`)
+            .join("<br/>");
+        },
+      },
     ];
     // this.rowData = this.createRowData();
     this.context = { componentParent: this };
@@ -128,9 +142,9 @@ export class ProductComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.globalServiceService.usermanagementCalling().subscribe(
-    data => {
+    (data: { productList: Array<any> }) => {
       console.log('API response:', data);
-      // this.rowData = data.productList;
+      this.rowData = data.productList;
     },
     error => {
       console.error('Error loading products', error);

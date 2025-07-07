@@ -171,6 +171,15 @@ export class GlobalServiceService {
     });
   }
 
+  getRatePlans(payload: any) {
+    return this.http.post(`${this.url}/rate/getRatePlan`, payload, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "x-auth-token": localStorage.getItem("x-auth-token") || "",
+      }),
+    });
+  }
+
   associateProductWithRatePlan(selectedProduct, selectedRatePlan) {
 
     this.productRatePlanMapping = JSON.stringify(

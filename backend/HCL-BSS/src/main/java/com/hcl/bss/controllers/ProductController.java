@@ -27,6 +27,7 @@ import com.hcl.bss.dto.ProductPlanAssociationDto;
 import com.hcl.bss.dto.ResponseDto;
 import com.hcl.bss.dto.StatusDto;
 import com.hcl.bss.services.ProductService;
+import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Price;
 import com.stripe.param.PriceCreateParams;
@@ -113,13 +114,6 @@ public class ProductController {
 	@ApiOperation(value = "Associate Product with Plan", response = String.class)
 	@PostMapping(value = "/product/associatePlan")
 	public ResponseEntity<StatusDto> accociatePlan(@RequestBody ProductPlanAssociationDto productPlan) throws StripeException {
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		try {
-			System.out.println("productPlan: " + objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(productPlan));
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 
 		BigDecimal productPlanPrice = BigDecimal.valueOf(productPlan.getRatePlan().get(0).getPrice());
 		Long amountInCents = productPlanPrice.multiply(BigDecimal.valueOf(100)).longValueExact(); // preferred

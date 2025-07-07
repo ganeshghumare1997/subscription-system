@@ -1,18 +1,116 @@
-<app-header></app-header>
-<div class="page-wrapper chiller-theme toggled">
-  <a id="show-sidebar" class="btn btn-sm btn-dark">
-    <i _ngcontent-c3="" aria-hidden="true" class="fa fa-bars fa-4" style="color:#ffffff;"></i>
-  </a>
-<app-sidebarnavigation></app-sidebarnavigation>
-  <!-- sidebar-wrapper  -->
+<div id="rightSideWrapper">
+  <div class="ContentBox">
+    <main>
+      <div class="container-fluid custom_search" style="padding: 0px">
+        <div
+          class="col-lg-12 search_box"
+          style="
+            padding: 0px;
+            color: #117a8b;
+            text-transform: uppercase;
+            line-height: 40px;
+          "
+        >
+          <h5>Rate Plan Master Table</h5>
 
-  <main class="page-content">
-    <div class="container-fluid">
-      <!-- <app-dashboard></app-dashboard> -->
-      <app-usermanagement></app-usermanagement>
-      <!-- <app-contact-list></app-contact-list> -->
-    </div>
-  </main>
-  <!-- page-content" -->
-  
+          <div
+            class="col-lg-12"
+            style="
+              border: 2px solid #bababa;
+              border-radius: 5px;
+              padding: 0px 10px;
+              text-transform: none;
+              margin-top: 0px;
+            "
+          >
+            <form>
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label for="ratePlanId">Rate Plan ID:</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      [(ngModel)]="searchRatePlanId"
+                      name="ratePlanId"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label for="pricingScheme">Pricing Scheme:</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      [(ngModel)]="searchPricingScheme"
+                      name="pricingScheme"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label for="uom">UOM:</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      [(ngModel)]="searchUOM"
+                      name="uom"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <label>&nbsp;</label>
+                  <button
+                    type="button"
+                    class="btn btn-info float-right"
+                    (click)="onSearch()"
+                  >
+                    Search <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px">
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th>Rate Plan ID</th>
+                <th>Description</th>
+                <th>Pricing Scheme</th>
+                <th>Price</th>
+                <th>UOM</th>
+                <th>Active</th>
+                <th>Frequency</th>
+                <th>Billing Term</th>
+                <th>Free Trial</th>
+                <th>Setup Fee</th>
+                <th>Expire After</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rate of ratePlanList">
+                <td>{{ rate.ratePlanId }}</td>
+                <td>{{ rate.name }}</td>
+                <td>{{ rate.pricingScheme }}</td>
+                <td>{{ rate.price }}</td>
+                <td>{{ rate.unitOfMesureId }}</td>
+                <td>{{ rate.isActive }}</td>
+                <td>{{ rate.billEvery }}</td>
+                <td>{{ rate.billingCycleTerm }}</td>
+                <td>{{ rate.freeTrail }}</td>
+                <td>{{ rate.setUpFee }}</td>
+                <td>{{ rate.expireAfter }}</td>
+              </tr>
+              <tr *ngIf="ratePlanList.length === 0">
+                <td colspan="11" class="text-center">No records found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
   </div>
+</div>
