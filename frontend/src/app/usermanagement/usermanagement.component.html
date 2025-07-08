@@ -1,16 +1,16 @@
 <!-- <ul>
   <li routerLink='/login' routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a>Dashboard</a></li>
   <li routerLink='/product' ><a>Products</a></li>
- 
+
 </ul> -->
 
         <div id="rightSideWrapper">
-         
-          
+
+
           <div class="ContentBox" style="display: block;">
-            <main> 
-              <!-- Main Content 
-  
+            <main>
+              <!-- Main Content
+
               <div class="test-header">
                 Page Size:
                 <select (change)="onPageSizeChanged()" id="page-size">
@@ -21,70 +21,14 @@
                 </select>
               </div> -->
               <div class="container-fluid custom_search" style="padding: 0px;">
-                <div class="col-lg-12 search_box" style="padding: 0px;color: #117a8b; text-transform: uppercase; line-height: 40px;">
-                  <h5>User Management</h5>
-                  
-                  <div class="col-lg-12" style="border:2px solid #bababa; border-radius: 5px; padding:0px 10px; text-transform: none; margin-top:0px;">
-                    <form action="#">
-                      <div class="row">
-                        <div class="col-lg-2">
-                          <div class="form-group">
-                            <label for="sel1">User Profile:</label>
-                            <select class="form-control form-control-sm" id="sel1" name="sellist1" [(ngModel)]="user_profile">
-							<option  [ngValue]="Select" hidden>Select</option> 
-                              <option>Admin</option>
-                              <option>Normal</option>
-                              <!-- <option>3</option>
-                              <option>4</option> -->
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-lg-2">
-                          <div class="form-group">
-                            <label for="usr">User Name:</label>
-                            <input type="text" class="form-control form-control-sm" id="usr" name="user_name" [(ngModel)]="user_name">
-                          </div>
-                        </div>
-                        <div class="col-lg-2">
-                          <div class="form-group">
-                            <label for="usr">First Name:</label>
-                            <input type="text" class="form-control form-control-sm" id="usr" name="first_name" [(ngModel)]="first_name">
-                          </div>
-                        </div>
-                        <div class="col-lg-2">
-                          <div class="form-group">
-                            <label for="sel1">Status:</label>
-                            <select class="form-control form-control-sm" id="sel1" name="sellist1" [(ngModel)]="status_val">
-							<option  [ngValue]="Select" hidden>Select</option> 
-                              <option>Active</option>
-                              <option>Deactive</option>
-                              <!-- <option>3</option>
-                              <option>4</option> -->
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <label style="width:100%;"></label>
-                            <button type="button" class="btn btn-info float-right" style=" margin-left: 5px; line-height:17px;" (click)="searchUser(user_profile,user_name,first_name,status_val)"> Search
-                                <i class="fa fa-search" aria-hidden="true" style="color:#ffffff;margin-top: -4px;margin-left: 5px; "></i>
-                              </button>
-                          <button type="button" class="btn btn-info float-right" style="line-height:17px;" (click)="open(addUser)"> Add User
-                            <i class="fa fa-user-o" aria-hidden="true" style="color:#ffffff;margin-top: -4px;margin-left: 5px;"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                
               <div id="productGrid" style="position: relative;">
               <div style="height: 100%; padding-top: 63px; box-sizing: border-box; width: auto;">
-              <!-- <button class="btn btn-info" (click)="openModal('addUser')">Add User</button> -->
+              <button class="btn btn-info" (click)="openModal('addUser')">Add User</button>
               <ag-grid-angular
               #agGrid
               style="width: 100%; height: 100%;"
               id="myGrid"
-              class="ag-theme-balham"                        
+              class="ag-theme-balham"
               [rowSelection]="rowSelection"
               [rowGroupPanelShow]="rowGroupPanelShow"
               [pivotPanelShow]="pivotPanelShow"
@@ -93,26 +37,24 @@
               [defaultColDef]="defaultColDef"
               [suppressRowClickSelection]="true"
               [rowSelection]="rowSelection"
-              [paginationPageSize]="paginationPageSize"              
-              [enableSorting]="true" 
+              [paginationPageSize]="paginationPageSize"
+              [enableSorting]="true"
               [enableFilter]="true"
-              [pagination]="true" 
+              [pagination]="true"
               [rowData]="rowData"
               [columnDefs]="columnDefs"
               (gridReady)="onGridReady($event)"
               [frameworkComponents]="frameworkComponents"
             ></ag-grid-angular>
-
           </div>
             <div style="position: absolute; top: 10px; left: auto; width: 100%;">
                 <input type="text" class="form-control" (input)="onQuickFilterChanged()" style="width: 30%; display: inline-block;" id="quickFilter" placeholder="quick filter..." />
-                <!-- <label> File Name: <input type="text" id="fileName" /> </label> -->
                 <label style="margin-left: 20px;"> <button (click)="onBtExport()" class="btn btn-info" style="margin-top: -7px;">Export to CSV <i aria-hidden="true" class="fa fa-cloud-download"></i></button> </label>
               </div>
-              
+
   </div>
   </div>
-  
+
 <ng-template #addUser let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add User</h4>
@@ -122,10 +64,10 @@
   </div>
 
       <flash-messages></flash-messages>
-    
+
   <div class="modal-body">
     <form>
-     
+
       <div class="row">
         <div class="col-lg-6">
           <div class="form-group">
@@ -173,11 +115,11 @@
           </div>
         </div>
       </div>
-    
+
     </form>
   </div>
   <div class="modal-footer">
-     
+
     <button type="button" class="btn btn-info" (click)="addUserData(firstName,middleName,lastName,email,userProfile,password)">Save</button>
     <button type="button" class="btn btn-info" (click)="modal.close('Save click')">Close</button>
   </div>
@@ -187,7 +129,7 @@
 
 
 
-<!-- 
+<!--
   <modal id="addUser">
       <div class="modal">
          <div class="modal-body">
@@ -204,7 +146,7 @@
               <label >Email:</label>
               <input type="email" class="form-control" name="email">
             </div>
-          
+
               <div class="form-group">
                 <label for="fname">First Name:</label>
                 <input type="text" class="form-control" name="fname">
@@ -216,13 +158,13 @@
               <div class="form-group">
                 <label for="mname">Middle Name:</label>
                 <input type="text" class="form-control" name="mname">
-              </div> 
-    
+              </div>
+
               <div class="form-group">
               <label for="islocked">Expiration:</label>
               <input type="text" class="form-control"  name="islocked">
             </div>
-             
+
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
          </div>
@@ -236,9 +178,9 @@
                           <e-column field='Freight' textAlign='Right' format='c2' width='120'></e-column>
                           <e-column field='ShipCountry' headerText='Ship Country' width='140'></e-column>
                       </e-columns>
-                  </ejs-grid> 
-  
-  
+                  </ejs-grid>
+
+
               Main content-2
               <ejs-grid [dataSource]='data' [allowPaging]='true' [allowSorting]='true' [allowFiltering]='true' [filterSettings]='filterSettings' [allowGrouping]='true'>
                       <e-columns>
@@ -248,8 +190,8 @@
                           <e-column field='Freight' textAlign='Right' format='c2' width='120'></e-column>
                           <e-column field='ShipCountry' headerText='Ship Country' width='140'></e-column>
                       </e-columns>
-                  </ejs-grid>  
-  
+                  </ejs-grid>
+
                   <div class="control-section">
                           <ejs-grid #grid [dataSource]='data' allowPaging="true" [pageSettings]='pageSettings' [toolbar]='toolbar'>
                               <e-columns>
@@ -258,7 +200,7 @@
                                   <e-column field='CustomerID' headerText='Quantity per unit' width='180' textAlign='Right'></e-column>
                                   <e-column field='Freight' headerText='Units In Stock' width='150' textAlign='Right'></e-column>
                               </e-columns>
-                          </ejs-grid>  
+                          </ejs-grid>
                   </div>
                   <ejs-grid [dataSource]='data' [allowPaging]='true' [allowSorting]='true' [allowFiltering]='true' [filterSettings]='filterSettings' [allowGrouping]='true'>
                           <e-columns>
@@ -268,10 +210,10 @@
                               <e-column field='ShipCountry' headerText='Ship Country' width='140'></e-column>
                           </e-columns>
                       </ejs-grid> -->
-  
+
             </main>
-            <!-- <footer> 
-              
+            <!-- <footer>
+
             </footer> -->
-          </div> 
+          </div>
         </div>

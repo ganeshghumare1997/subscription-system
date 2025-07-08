@@ -206,6 +206,8 @@ export class ProductComponent implements OnInit {
         });
 
       this.flashMessage.show('New Product added successfully!!', { cssClass: 'alert-success', timeout: 10000 });
+
+      setTimeout(() => window.location.reload(), 500);
       },
     error=>{
       this.spinnerService.hide();

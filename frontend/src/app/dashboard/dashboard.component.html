@@ -19,12 +19,6 @@
                                 <span>Products</span>
                               </a>
                             </li>
-                            <li>
-                                <a  href="javascript:void(0)" routerLink='/usermanagement'>
-                                  <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                <span>User Management</span>
-                              </a>
-                            </li>
                           </ul>
                       </div>
                 </div>
@@ -38,17 +32,17 @@
                 <option value="1000">1000</option>
               </select>
             </div>
-      
+
             <ag-grid-angular #agGrid style="width: 603px; height: 100%;" id="myGrid" class="ag-theme-balham" [rowSelection]="rowSelection"
               [rowGroupPanelShow]="rowGroupPanelShow" [pivotPanelShow]="pivotPanelShow" [enableRangeSelection]="true"
               [pagination]="true" [paginationPageSize]="paginationPageSize" [paginationNumberFormatter]="paginationNumberFormatter"
               [enableSorting]="true" [enableFilter]="true" [pagination]="true" [rowData]="rowData" [columnDefs]="columnDefs"
               (gridReady)="onGridReady($event)"></ag-grid-angular> -->
           </main>
-         
+
         </div>
       </div>
-     
+
 
 
 <!-- <app-header></app-header>
@@ -56,7 +50,7 @@
 <app-sidebarnavigation></app-sidebarnavigation>
   <main class="page-content">
     <div class="container-fluid">
-      
+
     </div>
-  </main>  
+  </main>
   </div> -->

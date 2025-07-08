@@ -12,65 +12,6 @@
           "
         >
           <h5>Rate Plan Master Table</h5>
-
-          <div
-            class="col-lg-12"
-            style="
-              border: 2px solid #bababa;
-              border-radius: 5px;
-              padding: 0px 10px;
-              text-transform: none;
-              margin-top: 0px;
-            "
-          >
-            <form>
-              <div class="row">
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label for="ratePlanId">Rate Plan ID:</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      [(ngModel)]="searchRatePlanId"
-                      name="ratePlanId"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label for="pricingScheme">Pricing Scheme:</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      [(ngModel)]="searchPricingScheme"
-                      name="pricingScheme"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label for="uom">UOM:</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      [(ngModel)]="searchUOM"
-                      name="uom"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <label>&nbsp;</label>
-                  <button
-                    type="button"
-                    class="btn btn-info float-right"
-                    (click)="onSearch()"
-                  >
-                    Search <i class="fa fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
 
         <div style="margin-top: 20px">

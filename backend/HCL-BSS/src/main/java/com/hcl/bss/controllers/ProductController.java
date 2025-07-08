@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.bss.domain.Product;
 import com.hcl.bss.domain.ProductTypeMaster;
 import com.hcl.bss.dto.DropDownOutDto;
@@ -27,7 +26,6 @@ import com.hcl.bss.dto.ProductPlanAssociationDto;
 import com.hcl.bss.dto.ResponseDto;
 import com.hcl.bss.dto.StatusDto;
 import com.hcl.bss.services.ProductService;
-import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Price;
 import com.stripe.param.PriceCreateParams;
@@ -114,7 +112,6 @@ public class ProductController {
 	@ApiOperation(value = "Associate Product with Plan", response = String.class)
 	@PostMapping(value = "/product/associatePlan")
 	public ResponseEntity<StatusDto> accociatePlan(@RequestBody ProductPlanAssociationDto productPlan) throws StripeException {
-
 		BigDecimal productPlanPrice = BigDecimal.valueOf(productPlan.getRatePlan().get(0).getPrice());
 		Long amountInCents = productPlanPrice.multiply(BigDecimal.valueOf(100)).longValueExact(); // preferred
 
@@ -128,7 +125,7 @@ public class ProductController {
 			)
 			.setNickname(productPlan.getRatePlan().get(0).getName())
 			.setProduct(String.valueOf(productPlan.getProduct().getStripeId())) //saved stripe product id
-			.putMetadata("service", "netflix") // same "service" key value for all pricing of a product.  (unique to a product) 
+			.putMetadata("service", productPlan.getProduct().getProductDispName()) // same "service" key value for all pricing of a product.  (unique to a product) 
 			.build();
 		
 		Price price = Price.create(priceParams);
