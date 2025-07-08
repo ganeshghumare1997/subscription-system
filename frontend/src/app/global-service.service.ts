@@ -151,6 +151,15 @@ export class GlobalServiceService {
     }));
   }
 
+  getAllSubscriptionSummaries(pageNo: number = 0) {
+
+    return this.http.get(this.url + `/subscriptionSummary/getSubscriptionSummaries/${pageNo}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('x-auth-token') || ''
+      })
+    });
+  }
 
   usermanagementCalling(pageNo: number = 0) {
 

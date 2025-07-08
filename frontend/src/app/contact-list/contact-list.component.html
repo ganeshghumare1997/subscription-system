@@ -17,14 +17,13 @@
           <h5>Subscription</h5>
 
           <flash-messages></flash-messages>
-          <div class="col-lg-12 search_box" style="border:2px solid #bababa; border-radius: 5px; padding:0px 10px; text-transform: none; margin-top:0px;">
+          <!-- <div class="col-lg-12 search_box" style="border:2px solid #bababa; border-radius: 5px; padding:0px 10px; text-transform: none; margin-top:0px;">
             <form action="#">
               <div class="row">
                 <div class="col-lg-2">
                   <div class="form-group">
                     <label for="sel1">Subscription No:</label>
                     <input type="text" class="form-control form-control-sm" id=" " name="subscriptionNo" [(ngModel)]="subscriptionNo" >
-                   
                   </div>
                 </div>
                 <div class="col-lg-2">
@@ -38,9 +37,7 @@
                     <label for=" ">First Name:</label>
                     <input type="text" class="form-control form-control-sm" id=" " name="first_name" [(ngModel)]="first_name">
                   </div>
-                </div> -->
-
-
+                </div>
                 <div class="col-lg-2">
                   <div class="form-group">
                     <label for=" ">Status:</label>
@@ -56,7 +53,6 @@
                       <input type="text" class="form-control form-control-sm" id=" " name="customerName" [(ngModel)]="customerName">
                     </div>
                   </div>
-  
                   <div class="col-lg-2">
                     <div class="form-group">
                       <label for=" ">Plan Name:</label>
@@ -69,10 +65,6 @@
                       <input type="text" class="form-control form-control-sm" id="" name="price" [(ngModel)]="price">
                     </div>
                   </div>
-
-
-
-                
               </div>
               <div class="row">
                   <div class="col-lg-2">
@@ -93,14 +85,14 @@
                               <i class="fa fa-calendar fa-2" aria-hidden="true"></i>
                               </button>
                             </div>
-                          </div> -->
-                        <!-- <input type="text" class="form-control form-control-sm" id=" " name="Created_on" [(ngModel)]="Created_on"> -->
+                          </div>
+                        <input type="text" class="form-control form-control-sm" id=" " name="Created_on" [(ngModel)]="Created_on">
                       </div>
                     </div>
                     <div class="col-lg-2">
                       <div class="form-group">
                         <label for="sel1">Activated On:</label>
-                        <!-- <input type="text" class="form-control form-control-sm" id=" " name="Activated_on" [(ngModel)]="Activated_on"> -->
+                        <input type="text" class="form-control form-control-sm" id=" " name="Activated_on" [(ngModel)]="Activated_on">
                         <div class="input-group">
                             <input  class="form-control form-control-sm" placeholder="DD-MM-YYYY"  name="activatedDate"  [(ngModel)]="activatedDate" ngbDatepicker #activedate="ngbDatepicker">
                             <div class="input-group-append">
@@ -114,7 +106,7 @@
                 <div class="col-lg-2">
                   <div class="form-group">
                     <label for="">Last Billed On:</label>
-                    <!-- <input type="text" class="form-control form-control-sm" id="" name="last_bill" [(ngModel)]="last_bill"> -->
+                    <input type="text" class="form-control form-control-sm" id="" name="last_bill" [(ngModel)]="last_bill">
                     <div class="input-group">
                         <input  class="form-control form-control-sm" placeholder="DD-MM-YYYY"  name="lastBillDate"  [(ngModel)]="lastBillDate" ngbDatepicker #lastbilldate="ngbDatepicker">
                         <div class="input-group-append">
@@ -128,7 +120,7 @@
                 <div class="col-lg-2">
                   <div class="form-group">
                     <label for=" ">Next Billed On:</label>
-                    <!-- <input type="text" class="form-control form-control-sm" id="" name="nextBillDate" [(ngModel)]="nextBillDate"> -->
+                    <input type="text" class="form-control form-control-sm" id="" name="nextBillDate" [(ngModel)]="nextBillDate">
                     <div class="input-group">
                         <input  class="form-control form-control-sm" placeholder="DD-MM-YYYY"  name="nextBillDate"  [(ngModel)]="nextBillDate" ngbDatepicker #nextbilldate="ngbDatepicker">
                         <div class="input-group-append">
@@ -144,8 +136,8 @@
                     <button type="button" id="searchBtn" class="btn btn-info float-right" style=" margin-left: 5px; line-height:17px;">
                         Export to Csv <i class="fa fa-cloud-download" aria-hidden="true"></i>
                     </button>
-                  
-                  
+
+
                   <button type="button" id="searchBtn" class="btn btn-info float-right" style=" margin-left: 5px; line-height:17px;" (click)="searchSubcription(subscriptionNo,customerName,email,planName,status,price,createdDate,activatedDate,lastBillDate,nextBillDate)">
                     Search
                     <i class="fa fa-search" aria-hidden="true" style="color:#ffffff;margin-top: -4px;margin-left: 5px; "></i>
@@ -154,14 +146,14 @@
               </div>
 
             </form>
-          </div>
+          </div>-->
         </div>
-        <div id="productGrid" style="position: relative;">
+          <div id="productGrid" style="position: relative;">
           <div style="height: 100%; padding-top: 15px; box-sizing: border-box; width: auto;">
             <ag-grid-angular #agGrid style="width: 100%; height: 100%;" id="myGrid" class="ag-theme-balham"
               [rowSelection]="rowSelection" [rowGroupPanelShow]="rowGroupPanelShow" [pivotPanelShow]="pivotPanelShow"
               [enableRangeSelection]="true" [pagination]="false" [defaultColDef]="defaultColDef"
-              [suppressRowClickSelection]="true" [rowSelection]="rowSelection" [paginationPageSize]="paginationPageSize"
+              [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize"
               [enableSorting]="true" [enableFilter]="true" [rowData]="rowData" [columnDefs]="columnDefs"
               (gridReady)="onGridReady($event)" [frameworkComponents]="frameworkComponents"></ag-grid-angular>
           </div>

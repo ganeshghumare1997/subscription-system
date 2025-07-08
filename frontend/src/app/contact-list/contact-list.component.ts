@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { ChildMessageRenderer } from "../child-message-renderer.component";
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateFRParserFormatter } from "../ngb-date-fr-parser-formatter";
 @Component({
   selector: 'app-contact-list',
@@ -29,18 +29,18 @@ export class ContactListComponent implements OnInit {
   private fileName;
 
   constructor(private spinnerService: Ng4LoadingSpinnerService, private router : Router,private flashMessage: FlashMessagesService,private http: HttpClient, private modalService: ModalsService, private globalServiceService: GlobalServiceService,private childMessageRenderer: ChildMessageRenderer) {
-
     this.columnDefs = [
-      { headerName: 'SUBSCRIPTION NO', field: 'subscriptionId' },
-      { headerName: 'CUSTOMBER NAME', field: 'customerName' },
-      { headerName: 'EMAIL', field: 'email' },
-      { headerName: 'PLAN NAME', field: 'planName' },
+      { headerName: 'STRIPE SUBSCRIPTION ID', field: 'stripeSubscriptionId' },
+      { headerName: 'CUSTOMER NAME', field: 'customerName' },
+      { headerName: 'CUSTOMER EMAIL', field: 'customerEmail' },
       { headerName: 'STATUS', field: 'status' },
-      { headerName: 'PRICE', field: 'price' },
-      { headerName: 'CREATED ON', field: 'createdDate' },
-      { headerName: 'ACTIVATED ON', field: 'activatedDate' },
-      { headerName: 'LAST BILLED ON', field: 'lastBillDate' },
-      { headerName: 'NEXT BILL DATE', field: 'nextBillDate', width:200},
+      { headerName: 'CREATED ON', field: 'createdOn' },
+      { headerName: 'ACTIVATED ON', field: 'activatedOn' },
+      { headerName: 'PLAN NAME', field: 'planName', width:200},
+      { headerName: 'PLAN PRICE', field: 'planPrice' },
+      { headerName: 'LAST BILLED ON', field: 'lastBilledOn' },
+      { headerName: 'UPDATED AT', field: 'updatedAt' },
+      { headerName: 'SUBSCRIPTION END DATE', field: 'subscriptionEndDate' }
     ];
    // this.rowData = this.createRowData();
     this.context = { componentParent: this };
@@ -60,7 +60,7 @@ export class ContactListComponent implements OnInit {
     this.modalService.open(id);
   }
   //open popup code end
- 
+
   //close popup code start
   closeModal(id: string) {
     this.modalService.close(id);
@@ -89,19 +89,17 @@ export class ContactListComponent implements OnInit {
         this.rowData = data;
         this.rowData=this.rowData.subscriptionList;
       //  this.flashMessage.show('Search successfully!!', { cssClass: 'alert-success', timeout: 10000 });
-        
         },
       error=>{
         this.spinnerService.hide();
         this.flashMessage.show('No data found!!', { cssClass: 'alert-danger', timeout: 10000 });
       });
     // }
-   
   }
 
   isValid(): boolean {
     if (this.router.url != '/subscriptions/report') {
-              return true;
+        return true;
       }
     return false;
   }
@@ -116,6 +114,11 @@ export class ContactListComponent implements OnInit {
         this.rowData=this.rowData.subscriptionList;
         params.api.paginationGoToPage(1);
       });
+    this.globalServiceService.getAllSubscriptionSummaries().subscribe(
+      (data: { subscriptionSummaryList: Array<any>} ) => {
+        this.rowData = data.subscriptionSummaryList;
+      }
+    );
   }
   onQuickFilterChanged() {
     var inputElement= <HTMLInputElement>document.getElementById("quickFilter");
@@ -135,5 +138,5 @@ export class ContactListComponent implements OnInit {
     this.gridApi.exportDataAsCsv(params);
   }
 // export to Csv code end
-} 
+}
 
