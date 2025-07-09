@@ -21,14 +21,14 @@ public class SubscriptionSummaryController {
 	@Autowired
 	SubscriptionSummaryService subscriptionSummaryService;
 	@Value("${app.page.size}")
-	 Integer recordPerPage;
+	Integer recordPerPage = 100;
 
 	@ApiOperation(value = "Get All Subscription Summary", response = SubscriptionSummaryDto.class)
 	@RequestMapping(value = "/subscriptionSummary/getSubscriptionSummaries/{pageNo}", produces = { "application/json" }, method = RequestMethod.GET)
 	public ResponseEntity<SubscriptionSummaryDataDto> getAllSubscriptionSummaries(@PathVariable("pageNo") String pageNo) {
 		Integer pageNumber = Integer.valueOf(pageNo);
 		
-		Pageable reqCount = PageRequest.of(pageNumber, recordPerPage);
+		Pageable reqCount = PageRequest.of(pageNumber, 100);
 		SubscriptionSummaryDataDto SubscriptionSummaryData = new SubscriptionSummaryDataDto();
 		SubscriptionSummaryData = subscriptionSummaryService.getAllSubscriptionSummaries(reqCount);
 		return new ResponseEntity<>(SubscriptionSummaryData, HttpStatus.OK);

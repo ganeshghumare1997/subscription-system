@@ -50,7 +50,7 @@ export class ContactListComponent implements OnInit {
     this.rowSelection = "multiple";
     this.rowGroupPanelShow = "always";
     this.pivotPanelShow = "always";
-    this.paginationPageSize = 10;
+    this.paginationPageSize = 15;
     this.paginationNumberFormatter = function (params) {
       return "[" + params.value.toLocaleString() + "]";
     };
