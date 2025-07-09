@@ -83,6 +83,7 @@ public class ProductServiceImpl implements ProductService {
 		productEntity.setProductDescription(product.getProductDescription());
 		productEntity.setSku(product.getSku());
 		productEntity.setStripeId(product.getStripeId());
+		productEntity.setIsActive(1);
 		String startDate = product.getProductStartDate();
 		String expDate = product.getProductExpDate();
 		if(null != expDate) {
