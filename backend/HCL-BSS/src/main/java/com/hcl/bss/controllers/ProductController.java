@@ -79,7 +79,7 @@ public class ProductController {
 	public ResponseEntity<ProductDataDto> getAllProduct(@PathVariable("pageNo") String pageNo) {
 		Integer pageNumber = Integer.valueOf(pageNo);
 		
-		Pageable reqCount = PageRequest.of(pageNumber, recordPerPage);
+		Pageable reqCount = PageRequest.of(pageNumber, 100);
 		ProductDataDto productData = new  ProductDataDto();
 		productData = productService.getAllProducts(reqCount);
 		return new ResponseEntity<>(productData, HttpStatus.OK);

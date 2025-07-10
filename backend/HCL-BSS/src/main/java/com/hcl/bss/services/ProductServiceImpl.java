@@ -338,6 +338,7 @@ public class ProductServiceImpl implements ProductService {
 		List<Long> ids = rpDtoList.stream().map(x->x.getUidpk()).collect(Collectors.toList());
 		//ratePlan = ratePlanRepository.getOne(rpId);
 		ratePlan = ratePlanRepository.findAllById(ids);
+		ratePlanSet.addAll(prod.getRatePlans());
 		ratePlanSet.addAll(ratePlan);
 		prod.setRatePlans(ratePlanSet);		
 			 try {
